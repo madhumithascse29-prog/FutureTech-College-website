@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>FutureTech College | Next-Gen Campus Experience</title>
+  <!-- Google Fonts + Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8fafc;
+      --text-primary: #1a2c3e;
+      --text-secondary: #4a5568;
+      --card-bg: #ffffff;
+      --nav-bg: rgba(255, 255, 255, 0.96);
+      --border-color: #e2e8f0;
+      --gradient-start: #1e4a76;
+      --gradient-end: #0f3557;
+      --gold: #d4af37;
+      --gold-light: #f5d97a;
+    }
+
+    body.dark {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --text-primary: #f1f5f9;
+      --text-secondary: #cbd5e1;
+      --card-bg: #1e293b;
+      --nav-bg: rgba(15, 23, 42, 0.96);
+      --border-color: #334155;
+      --gradient-start: #3b82f6;
+      --gradient-end: #1e40af;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      transition: background 0.3s ease, color 0.2s ease;
+    }
+
+    h1, h2, h3, .logo, .nav-links a, .stat-number {
+      font-family: 'Poppins', sans-serif;
+    }
+
+    /* Advanced Animations */
+    @keyframes floatSlow { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-15px); } }
+    @keyframes floatFast { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
+    @keyframes pulseGlow { 0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.6); } 70% { box-shadow: 0 0 0 15px rgba(212, 175, 55, 0); } 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); } }
+    @keyframes runningBorder { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+    @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+    @keyframes slideInLeft { from { opacity: 0; transform: translateX(-50px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes slideInRight { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+    @keyframes bounceIn { 0% { opacity: 0; transform: scale(0.3); } 50% { opacity: 1; transform: scale(1.05); } 100% { transform: scale(1); } }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+    @keyframes floatIcon { 0% { transform: translateY(0px); } 50% { transform: translateY(-5px); } 100% { transform: translateY(0px); } }
+
+    /* Scroll Reveal */
+    .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+    .reveal-left { opacity: 0; transform: translateX(-40px); transition: all 0.7s ease-out; }
+    .reveal-left.active { opacity: 1; transform: translateX(0); }
+    .reveal-right { opacity: 0; transform: translateX(40px); transition: all 0.7s ease-out; }
+    .reveal-right.active { opacity: 1; transform: translateX(0); }
+    .reveal-scale { opacity: 0; transform: scale(0.92); transition: all 0.6s ease-out; }
+    .reveal-scale.active { opacity: 1; transform: scale(1); }
+
+    /* Loader */
+    .loader-wrapper { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(145deg, #071a2b, #0e2a44); display: flex; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.8s ease; }
+    .loader-logo { font-size: 3.5rem; font-weight: 900; background: linear-gradient(135deg, #d4af37, #ffea9e); -webkit-background-clip: text; background-clip: text; color: transparent; animation: floatSlow 2s infinite; }
+    .loader-progress { width: 250px; height: 3px; background: rgba(255,255,255,0.2); border-radius: 3px; margin-top: 1rem; overflow: hidden; }
+    .loader-progress-bar { width: 0%; height: 100%; background: linear-gradient(90deg, #d4af37, #ffdd88); animation: progressLoad 1.6s ease-out forwards; }
+    @keyframes progressLoad { 0% { width: 0%; } 100% { width: 100%; } }
+
+    /* Navbar */
+    .navbar { position: fixed; top: 0; width: 100%; background: var(--nav-bg); backdrop-filter: blur(12px); z-index: 1000; padding: 0.9rem 2rem; transition: all 0.3s ease; }
+    .navbar.scrolled { padding: 0.5rem 2rem; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); }
+    .nav-container { max-width: 1400px; margin: auto; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 2rem; font-weight: 800; background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .logo span { background: linear-gradient(135deg, #d4af37, #f5d97a); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { text-decoration: none; font-weight: 600; color: var(--text-primary); transition: 0.3s; position: relative; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 0%; height: 2.5px; background: linear-gradient(90deg, #d4af37, #ffea9e); transition: width 0.3s; }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+    .nav-links a.active { color: #d4af37; }
+    .menu-icon { font-size: 1.8rem; cursor: pointer; display: none; color: var(--gold); }
+    .theme-toggle { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 50px; padding: 8px 16px; cursor: pointer; display: flex; gap: 8px; align-items: center; font-weight: 500; color: var(--text-primary); transition: all 0.3s; }
+    .theme-toggle:hover { transform: scale(1.05); }
+
+    /* Buttons */
+    .btn { display: inline-block; padding: 14px 36px; border-radius: 50px; font-weight: 700; text-decoration: none; transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1); cursor: pointer; border: none; }
+    .btn-primary { background: linear-gradient(105deg, var(--gradient-start), var(--gradient-end)); color: white; box-shadow: 0 10px 20px -8px rgba(30, 74, 118, 0.4); }
+    .btn-primary:hover { transform: translateY(-4px); box-shadow: 0 18px 30px -8px rgba(30, 74, 118, 0.5); }
+    .btn-outline { background: transparent; border: 2px solid #d4af37; color: #d4af37; }
+    .btn-outline:hover { background: #d4af37; color: #1a2c3e; transform: translateY(-4px); }
+    .btn-large { padding: 16px 42px; font-size: 1.1rem; }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, rgba(10, 37, 64, 0.88), rgba(0, 0, 0, 0.82)), url('https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat fixed;
+      display: flex;
+      align-items: center;
+      padding: 0 2rem;
+      position: relative;
+    }
+    .hero-content { max-width: 900px; color: white; animation: scaleIn 0.9s ease-out forwards; }
+    .hero h1 { font-size: 5.5rem; font-weight: 900; background: linear-gradient(135deg, #ffffff, #ffefb0, #d4af37); background-size: 200% auto; -webkit-background-clip: text; background-clip: text; color: transparent; animation: gradientBG 4s ease infinite; margin-bottom: 0.5rem; }
+    .hero-tagline { font-size: 1.6rem; letter-spacing: 1px; margin-bottom: 1rem; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .running-text { background: linear-gradient(90deg, #d4af37, #ffe6a3, #d4af37); background-size: 200% auto; -webkit-background-clip: text; background-clip: text; color: transparent; animation: runningBorder 3s linear infinite; }
+    .hero-badge { background: rgba(212, 175, 55, 0.2); backdrop-filter: blur(10px); padding: 8px 20px; border-radius: 50px; display: inline-block; margin-top: 1rem; font-weight: 500; border: 1px solid rgba(212, 175, 55, 0.5); }
+    .hero-buttons { margin-top: 2.5rem; display: flex; gap: 1.2rem; flex-wrap: wrap; }
+    .hero-stats { display: flex; gap: 2rem; margin-top: 3rem; flex-wrap: wrap; }
+    .hero-stat-item { background: rgba(255,255,255,0.1); backdrop-filter: blur(8px); padding: 12px 24px; border-radius: 60px; text-align: center; border: 1px solid rgba(255,255,255,0.2); }
+
+    /* Sections */
+    section { padding: 5rem 2rem; }
+    .container { max-width: 1280px; margin: 0 auto; }
+    .section-title { font-size: 3rem; text-align: center; margin-bottom: 3rem; font-weight: 800; background: linear-gradient(135deg, var(--gradient-start), var(--gold)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .section-title:after { content: ''; width: 120px; height: 4px; background: linear-gradient(90deg, #d4af37, #f5d97a); display: block; margin: 15px auto 0; border-radius: 4px; }
+
+    /* Gallery Section */
+    .gallery-enhanced { background: var(--bg-secondary); border-radius: 60px; margin: 2rem 0; padding: 2rem; }
+    .gallery-showcase { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 3rem; }
+    .gallery-feature { position: relative; border-radius: 32px; overflow: hidden; cursor: pointer; transition: all 0.5s; }
+    .gallery-feature img { width: 100%; height: 320px; object-fit: cover; transition: transform 0.6s; }
+    .gallery-feature:hover img { transform: scale(1.08); }
+    .gallery-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.85)); padding: 2rem; color: white; transform: translateY(100%); transition: transform 0.4s; }
+    .gallery-feature:hover .gallery-overlay { transform: translateY(0); }
+    .gallery-marquee { overflow: hidden; white-space: nowrap; background: linear-gradient(90deg, var(--card-bg), var(--bg-secondary)); padding: 1rem 0; border-radius: 60px; margin-top: 2rem; }
+    .gallery-marquee-content { display: inline-block; animation: marquee 25s linear infinite; }
+    .gallery-marquee-content img { width: 200px; height: 130px; object-fit: cover; border-radius: 20px; margin: 0 10px; transition: 0.3s; cursor: pointer; }
+    .gallery-marquee-content img:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+
+    /* Stats & Cards */
+    .stats-grid, .facilities-grid, .courses-grid, .hostel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+    .stat-card, .facility-card, .course-card, .hostel-card { background: var(--card-bg); border-radius: 32px; padding: 2rem; transition: all 0.4s; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid var(--border-color); text-align: center; }
+    .stat-card:hover, .facility-card:hover, .course-card:hover, .hostel-card:hover { transform: translateY(-12px); box-shadow: 0 25px 40px -12px rgba(212,175,55,0.2); }
+    .stat-number { font-size: 3rem; font-weight: 800; color: var(--gold); }
+    .facility-card i, .stat-card i { display: block; margin: 0 auto 1rem auto; text-align: center; }
+
+    /* Contact - Enhanced Section */
+    .contact-enhanced { background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary)); border-radius: 60px; padding: 3rem; margin: 1rem; }
+    .contact-grid-enhanced { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+    .contact-card-modern { background: var(--card-bg); border-radius: 48px; padding: 2rem; box-shadow: 0 20px 40px rgba(0,0,0,0.1); transition: all 0.4s; }
+    .contact-card-modern:hover { transform: translateY(-8px); }
+    .contact-icon-circle { width: 60px; height: 60px; background: linear-gradient(135deg, var(--gold), #ffea9e); border-radius: 30px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
+    .form-floating input, .form-floating textarea { width: 100%; padding: 16px 20px; border-radius: 60px; border: 2px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary); transition: 0.3s; margin-bottom: 1rem; font-family: inherit; }
+    .form-floating input:focus, .form-floating textarea:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2); }
+    /* Enhanced message section styling */
+    .enhanced-message-area { position: relative; }
+    .char-counter { font-size: 0.75rem; text-align: right; margin-top: -0.5rem; margin-bottom: 1rem; color: var(--text-secondary); }
+    .contact-submit-btn { width: 100%; background: linear-gradient(105deg, var(--gradient-start), var(--gradient-end)); padding: 16px; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; gap: 12px; transition: all 0.3s; }
+    .contact-submit-btn:hover { transform: translateY(-3px); gap: 18px; letter-spacing: 0.5px; }
+
+    /* Table */
+    .admissions-table-wrapper { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; background: var(--card-bg); border-radius: 28px; overflow: hidden; }
+    th { background: linear-gradient(105deg, var(--gradient-start), var(--gradient-end)); color: white; padding: 15px; cursor: pointer; }
+    td { padding: 12px; border-bottom: 1px solid var(--border-color); }
+
+    /* ENHANCED FOOTER SECTION */
+    .footer-enhanced {
+      background: linear-gradient(135deg, #0a1c2c, #071928);
+      color: #e2e8f0;
+      padding: 4rem 2rem 2rem;
+      margin-top: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .footer-enhanced::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #d4af37, #f5d97a, #d4af37);
+      animation: runningBorder 3s linear infinite;
+      background-size: 200% auto;
+    }
+    .footer-grid {   display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; max-width: 1280px; margin: auto; position: relative; z-index: 2; }
+    .footer-brand .footer-logo { font-size: 2rem; font-weight: 800; background: linear-gradient(135deg, #d4af37, #f5d97a); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 1rem; display: inline-block; }
+    .footer-social-icons { display: flex; gap: 1rem; margin: 1.5rem 0; }
+    .footer-social-icons a { width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s; color: #d4af37; }
+    .footer-social-icons a:hover { background: #d4af37; color: #0a1c2c; transform: translateY(-5px); }
+    .footer-links h4, .footer-contact h4, .footer-newsletter h4 { color: #d4af37; margin-bottom: 1.2rem; font-size: 1.2rem; position: relative; display: inline-block; }
+    .footer-links h4:after, .footer-contact h4:after, .footer-newsletter h4:after { content: ''; position: absolute; bottom: -5px; left: 0; width: 40px; height: 2px; background: #d4af37; }
+    .footer-links a { display: block; color: #cbd5e1; text-decoration: none; margin: 0.6rem 0; transition: all 0.3s; }
+    .footer-links a:hover { color: #d4af37; transform: translateX(8px); }
+    .footer-contact p { margin: 0.8rem 0; display: flex; align-items: center; gap: 10px; }
+    .footer-contact i { color: #d4af37; width: 25px; animation: floatIcon 2s infinite ease-in-out; }
+    .newsletter-group { display: flex; margin-top: 1rem; }
+    .newsletter-group input { flex: 1; padding: 12px 16px; border-radius: 50px 0 0 50px; border: none; outline: none; background: rgba(255,255,255,0.1); color: white; }
+    .newsletter-group input::placeholder { color: #94a3b8; }
+    .newsletter-group button { background: #d4af37; border: none; padding: 0 20px; border-radius: 0 50px 50px 0; cursor: pointer; font-weight: bold; transition: 0.3s; }
+    .newsletter-group button:hover { background: #f5d97a; transform: scale(1.02); }
+    .footer-bottom { text-align: center; padding-top: 2.5rem; margin-top: 2.5rem; border-top: 1px solid #334155; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; max-width: 1280px; margin-left: auto; margin-right: auto; }
+    .footer-bottom-links a { color: #94a3b8; text-decoration: none; margin-left: 1.5rem; transition: 0.3s; }
+    .footer-bottom-links a:hover { color: #d4af37; }
+    .back-to-top { position: fixed; bottom: 2rem; right: 2rem; background: linear-gradient(135deg, #d4af37, #f3c550); width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; visibility: hidden; transition: all 0.3s; z-index: 99; }
+    .back-to-top.show { opacity: 1; visibility: visible; }
+    .back-to-top:hover { transform: translateY(-5px); }
+
+    /* Hostel Premium Enhancements */
+    .hostel-card .amenity-badge { background: var(--bg-secondary); padding: 6px 14px; border-radius: 30px; font-size: 0.8rem; display: inline-block; margin: 3px; font-weight: 500; }
+    .hostel-premium-tag { background: linear-gradient(135deg, #d4af37, #ffcf4a); color: #1e2a3a; font-weight: bold; padding: 6px 16px; border-radius: 40px; display: inline-block; margin-bottom: 15px; font-size: 0.8rem; letter-spacing: 0.5px; }
+    .hostel-price { font-size: 1.6rem; font-weight: 800; color: var(--gold); margin: 0.5rem 0; }
+    .hostel-feature-list { display: flex; flex-wrap: wrap; gap: 8px; margin: 1rem 0; justify-content: center; }
+
+    @media (max-width: 768px) {
+      .nav-links { position: fixed; top: 70px; left: -100%; background: var(--card-bg); width: 80%; height: 100vh; flex-direction: column; padding: 2rem; transition: 0.3s; z-index: 999; }
+      .nav-links.active { left: 0; }
+      .menu-icon { display: block; }
+      .hero h1 { font-size: 2.8rem; }
+      .hero-tagline { font-size: 1.2rem; }
+      .contact-grid-enhanced { grid-template-columns: 1fr; }
+      .gallery-showcase { grid-template-columns: 1fr; }
+      .section-title { font-size: 2rem; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .footer-bottom-links a { margin: 0 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="loader-wrapper" id="loader"><div><div class="loader-logo">FutureTech</div><div class="loader-progress"><div class="loader-progress-bar"></div></div></div></div>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <div class="logo">FutureTech<span>College</span></div>
+    <div class="menu-icon" id="menuIcon"><i class="fas fa-bars"></i></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home" class="nav-link">Home</a></li><li><a href="#about" class="nav-link">About</a></li><li><a href="#courses" class="nav-link">Courses</a></li><li><a href="#facilities" class="nav-link">Facilities</a></li><li><a href="#hostel" class="nav-link">Hostels</a></li><li><a href="#admissions" class="nav-link">Admissions</a></li><li><a href="#gallery" class="nav-link">Life@Campus</a></li><li><a href="#contact" class="nav-link">Contact</a></li>
+    </ul>
+    <div class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i><span>Mode</span></div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section id="home" class="hero">
+  <div class="hero-content">
+    <h1>FutureTech College</h1>
+    <div class="hero-badge"><i class="fas fa-award"></i> Top 10 Emerging University | Ranked #1 for Innovation</div>
+    <div class="hero-buttons"><a href="#admissions" class="btn btn-primary btn-large">🎓 Apply Now</a><a href="#courses" class="btn btn-outline btn-large">📖 Explore Programs</a></div>
+    <div class="hero-stats"><div class="hero-stat-item"><i class="fas fa-user-graduate"></i> 12,500+ Students</div><div class="hero-stat-item"><i class="fas fa-chalkboard"></i> 50+ Programs</div><div class="hero-stat-item"><i class="fas fa-globe"></i> 200+ Global Partners</div></div>
+  </div>
+</section>
+
+<!-- About -->
+<section id="about"><div class="container"><h2 class="section-title reveal">About Excellence</h2><div class="about-grid" style="display:flex; gap:3rem; flex-wrap:wrap;"><div class="about-text reveal-left" style="flex:1.2; background:var(--card-bg); padding:2rem; border-radius:40px;"><p>Founded in 1998, FutureTech College is a beacon of academic brilliance with state-of-the-art infrastructure, global collaborations, and an unwavering commitment to shaping the leaders of tomorrow. Our 65-acre smart campus hosts 12,500+ students from 30+ countries.</p><p style="margin-top:1rem">Recognized as 'Institute of Eminence', we blend AI-driven pedagogy with human-centric values.</p></div><div class="mission-vision" style="flex:1;"><div class="mv-card reveal-right" style="background:var(--card-bg); padding:1.5rem; border-radius:30px; border-left:5px solid #d4af37; margin-bottom:1rem;"><i class="fas fa-bullhorn" style="color:#d4af37; font-size:1.8rem;"></i><h3>Mission</h3><p>To foster innovation, critical thinking, and ethical leadership.</p></div><div class="mv-card reveal-right" style="background:var(--card-bg); padding:1.5rem; border-radius:30px; border-left:5px solid #d4af37;"><i class="fas fa-chart-line" style="color:#d4af37; font-size:1.8rem;"></i><h3>Vision</h3><p>Global hub for sustainable innovation and interdisciplinary breakthroughs.</p></div></div></div></div></section>
+
+<!-- Stats -->
+<section style="background: var(--bg-secondary);"><div class="container"><div class="stats-grid"><div class="stat-card reveal-scale"><i class="fas fa-users" style="font-size:2.8rem; color:#d4af37;"></i><div class="stat-number" data-count="12500">0</div><p>+ Students</p></div><div class="stat-card reveal-scale"><i class="fas fa-graduation-cap" style="font-size:2.8rem; color:#d4af37;"></i><div class="stat-number" data-count="52">0</div><p>+ Programs</p></div><div class="stat-card reveal-scale"><i class="fas fa-calendar-alt" style="font-size:2.8rem; color:#d4af37;"></i><div class="stat-number" data-count="26">0</div><p>Years Legacy</p></div><div class="stat-card reveal-scale"><i class="fas fa-chart-simple" style="font-size:2.8rem; color:#d4af37;"></i><div class="stat-number" data-count="98">0</div><p>% Placements</p></div></div></div></section>
+
+
+<section id="facilities"><div class="container"><h2 class="section-title reveal">World-Class Facilities</h2><div class="facilities-grid" id="facilitiesGrid"></div></div></section>
+
+<!-- Hostel Section -->
+<section id="hostel" style="background: var(--bg-secondary);">
+  <div class="container">
+    <h2 class="section-title reveal">🏠 Premium Hostel Living</h2>
+    <p style="text-align: center; margin-bottom: 2rem; font-size: 1.1rem;">Luxury, safety, and community — your perfect home away from home.</p>
+    <div class="hostel-grid" id="hostelGrid"></div>
+    <div style="text-align: center; margin-top: 3rem;">
+      <button id="hostelApplyBtn" class="btn btn-primary btn-large"><i class="fas fa-calendar-check"></i> Book Your Room Now</button>
+    </div>
+  </div>
+</section>
+
+<!-- Courses Section -->
+<section id="courses">
+  <div class="container">
+    <h2 class="section-title reveal">Academic Pathways</h2>
+    <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; padding: 0.6rem 1rem; background: rgba(212, 175, 55, 0.08); border-radius: 80px; backdrop-filter: blur(2px);">
+      <button class="filter-btn active" data-filter="all" style="background: linear-gradient(135deg, #d4af37, #ffea9e); border: none; padding: 12px 28px; border-radius: 50px; font-weight: 700; cursor: pointer; transition: 0.2s; color: #1a2c3e;">📚 All Programs</button>
+      <button class="filter-btn" data-filter="engineering" style="background: var(--card-bg); border: 1px solid var(--border-color); padding: 12px 28px; border-radius: 50px; font-weight: 600; cursor: pointer; transition: 0.2s; color: var(--text-primary);">🚀 Engineering</button>
+      <button class="filter-btn" data-filter="arts" style="background: var(--card-bg); border: 1px solid var(--border-color); padding: 12px 28px; border-radius: 50px; font-weight: 600; cursor: pointer; transition: 0.2s; color: var(--text-primary);">🎭 Arts</button>
+      <button class="filter-btn" data-filter="commerce" style="background: var(--card-bg); border: 1px solid var(--border-color); padding: 12px 28px; border-radius: 50px; font-weight: 600; cursor: pointer; transition: 0.2s; color: var(--text-primary);">💼 Commerce</button>
+      <button class="filter-btn" data-filter="emerging" style="background: var(--card-bg); border: 1px solid var(--border-color); padding: 12px 28px; border-radius: 50px; font-weight: 600; cursor: pointer; transition: 0.2s; color: var(--text-primary);">✨ Emerging Tech</button>
+    </div>
+    <div class="courses-grid" id="coursesGrid"></div>
+  </div>
+</section>
+
+<!-- Admissions -->
+<section id="admissions" style="background: var(--bg-secondary);"><div class="container"><h2 class="section-title reveal">Fee & Admissions 2025</h2><input type="text" id="tableSearch" placeholder="🔍 Search Course..." style="margin-bottom:1.5rem; padding:12px 20px; border-radius:60px; width:300px; background:var(--card-bg); border:1px solid var(--border-color); color:var(--text-primary);"><div class="admissions-table-wrapper"><table id="feeTable"><thead><th data-sort="course">Course ⬍</th><th data-sort="duration">Duration</th><th data-sort="fee">Annual Fee</th><th data-sort="seats">Seats</th><th>Action</th></thead><tbody id="tableBody"></tbody></table></div></div></section>
+
+<!-- Gallery -->
+<section id="gallery" class="gallery-enhanced"><div class="container"><h2 class="section-title reveal">🌟 Life @ FutureTech</h2><div class="gallery-showcase"><div class="gallery-feature" data-img="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800"><img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=600" alt="Annual Tech Fest"><div class="gallery-overlay"><h3>🔥 Annual Tech Fest</h3><p>5000+ participants | 100+ startups | Innovation Expo</p></div></div><div class="gallery-feature" data-img="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=800"><img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=600" alt="Digital Library"><div class="gallery-overlay"><h3>📚 Smart Library</h3><p>1M+ resources | 24/7 digital access</p></div></div><div class="gallery-feature" data-img="https://images.unsplash.com/photo-1576495199011-eb94736d05d6?w=800"><img src="https://images.unsplash.com/photo-1576495199011-eb94736d05d6?w=600" alt="Sports Arena"><div class="gallery-overlay"><h3>⚽ Olympic Sports Complex</h3><p>Cricket, Football, Swimming, Tennis</p></div></div></div><div class="gallery-marquee"><div class="gallery-marquee-content" id="marqueeContent"></div><div class="gallery-marquee-content" id="marqueeContentClone"></div></div></div></section>
+
+<!-- Contact Section - ENHANCED "Send us a Message" -->
+<section id="contact" class="contact-enhanced"><div class="container"><h2 class="section-title reveal">Get In Touch</h2><div class="contact-grid-enhanced"><div class="contact-card-modern reveal-left"><div class="contact-icon-circle"><i class="fas fa-map-marker-alt fa-2x" style="color:#1e2f3e;"></i></div><h3>Visit Campus</h3><p>88 Innovation Blvd, Tech Valley, CA 94016</p><div style="margin:1.5rem 0;"><div style="display:flex; gap:1rem; margin-bottom:1rem;"><i class="fas fa-phone-alt" style="color:var(--gold);"></i><span>+1 (800) 456-7890</span></div><div style="display:flex; gap:1rem;"><i class="fas fa-envelope" style="color:var(--gold);"></i><span>admissions@futuretech.edu</span></div></div><iframe width="100%" height="200" style="border-radius:24px; margin-top:1.5rem;" loading="lazy" src="https://maps.google.com/maps?q=Silicon%20Valley&output=embed"></iframe></div>
+<!-- Enhanced Message Form -->
+<div class="contact-card-modern reveal-right"><h3>Send us a Message</h3><p style="margin-bottom:1rem;">We'll respond within 24 hours. Your feedback matters!</p><form id="contactForm" class="form-floating"><input type="text" id="contactName" placeholder="Full Name *" required><input type="email" id="contactEmail" placeholder="Email Address *" required><input type="text" id="contactSubject" placeholder="Subject (Optional)"><div class="enhanced-message-area"><textarea rows="5" id="contactMsg" placeholder="How can we help you? *" required style="resize: vertical;"></textarea><div class="char-counter"><span id="charCount">0</span>/500 characters</div></div><div id="formError" style="color:#e53e3e; margin:0.5rem 0; font-size:0.9rem;"></div><button type="submit" class="btn btn-primary contact-submit-btn"><i class="fas fa-paper-plane"></i> Send Message <i class="fas fa-arrow-right"></i></button></form></div></div></div></section>
+
+<!-- Footer -->
+<footer class="footer-enhanced">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="footer-logo">FutureTech<span style="color:#d4af37;">College</span></div><p style="margin-top: 1rem; line-height: 1.6;">Empowering future innovators since 1998. Ranked among top 10 emerging universities globally.</p><div class="footer-social-icons"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-linkedin-in"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-youtube"></i></a></div></div>
+    <div class="footer-links"><h4>Quick Links</h4><a href="#home">Home</a><a href="#about">About Us</a><a href="#courses">Academics</a><a href="#admissions">Admissions</a><a href="#gallery">Campus Life</a><a href="#contact">Contact</a></div>
+    <div class="footer-links"><h4>Resources</h4><a href="#">Scholarships & Aid</a><a href="#">Placement Cell</a><a href="#">Alumni Network</a><a href="#">Research Centers</a><a href="#">Student Portal</a><a href="#">Campus Tour 360°</a></div>
+    <div class="footer-contact"><h4>Contact Info</h4><p><i class="fas fa-map-marker-alt"></i> 88 Innovation Blvd, Tech Valley, CA 94016</p><p><i class="fas fa-phone-alt"></i> +1 (800) 456-7890</p><p><i class="fas fa-envelope"></i> admissions@futuretech.edu</p><p><i class="fas fa-clock"></i> Mon - Sat: 9:00 AM - 6:00 PM</p></div>
+    <div class="footer-newsletter"><h4>Stay Updated</h4><p>Subscribe for latest news, events & scholarships</p><div class="newsletter-group"><input type="email" id="newsEmailFooter" placeholder="Your email address"><button id="newsBtnFooter"><i class="fas fa-paper-plane"></i></button></div><p style="margin-top: 1rem; font-size: 0.8rem;"><i class="fas fa-lock"></i> We never share your data</p></div>
+  </div>
+  <div class="footer-bottom"><p>© 2025 FutureTech College. All Rights Reserved. | Designed with <i class="fas fa-heart" style="color:#d4af37;"></i> for innovation</p><div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a><a href="#">Cookie Policy</a><a href="#">Accessibility</a></div></div>
+</footer>
+<div class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></div>
+
+<!-- Modal -->
+<div id="applyModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:2000; align-items:center; justify-content:center;"><div style="background:var(--card-bg); max-width:450px; width:90%; border-radius:40px; padding:2rem;"><span id="closeModal" style="float:right; font-size:28px; cursor:pointer;">&times;</span><h3 id="modalTitle">Apply Now</h3><form id="modalForm"><input type="text" id="studentName" placeholder="Full Name*" required style="width:100%; padding:12px; margin:8px 0; border-radius:30px;"><input type="email" id="studentEmail" placeholder="Email*" required><select id="studentCourse"><option>CSE</option><option>AI & DS</option><option>Robotics</option><option>Digital Marketing</option><option>English</option><option>Psychology</option><option>B.Com</option><option>BBA</option></select><button class="btn btn-primary">Submit</button><div id="modalMsg"></div></form></div></div>
+
+<script>
+  window.addEventListener('load', () => { setTimeout(() => { document.getElementById('loader').style.opacity = '0'; setTimeout(() => document.getElementById('loader').style.display = 'none', 400); }, 800); });
+  const themeToggle = document.getElementById('themeToggle');
+  themeToggle.addEventListener('click', () => { document.body.classList.toggle('dark'); localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light'); });
+  if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
+  const revealObserver = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); }); }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => revealObserver.observe(el));
+  window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50); document.getElementById('backToTop').classList.toggle('show', window.scrollY > 500); });
+  document.getElementById('backToTop').onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.getElementById('menuIcon').onclick = () => document.getElementById('navLinks').classList.toggle('active');
+  document.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', () => document.getElementById('navLinks').classList.remove('active')));
+  
+  // Stats counter
+  const statObserver = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { const el = entry.target; const target = parseInt(el.getAttribute('data-count')); let curr = 0; const inc = target / 45; const timer = setInterval(() => { curr += inc; if (curr >= target) { el.innerText = target + (el.getAttribute('data-count') === '12500' ? '+' : (el.getAttribute('data-count') === '96' ? '%' : '')); clearInterval(timer); } else { el.innerText = Math.floor(curr) + (el.getAttribute('data-count') === '96' ? '%' : ''); } }, 25); statObserver.unobserve(el); } }); }, { threshold: 0.5 });
+  document.querySelectorAll('.stat-number').forEach(num => statObserver.observe(num));
+  
+  // Facilities - Added 1 more world class facility: Immersive VR & Metaverse Lab
+  const facilities = [
+    { icon: "fas fa-book-open", name: "Digital Library" }, 
+    { icon: "fas fa-microscope", name: "Research Labs" }, 
+    { icon: "fas fa-futbol", name: "Sports Complex" }, 
+    { icon: "fas fa-robot", name: "AI Innovation Hub" }, 
+    { icon: "fas fa-car", name: "EV Smart Parking" }, 
+    { icon: "fas fa-music", name: "Performing Arts" }, 
+    { icon: "fas fa-chalkboard-user", name: "AI Auditorium (New)" }, 
+    { icon: "fas fa-spa", name: "Wellness Oasis (New)" },
+    { icon: "fas fa-vr-cardboard", name: "Immersive VR & Metaverse Lab (New)" }
+  ];
+  document.getElementById('facilitiesGrid').innerHTML = facilities.map(f => `<div class="facility-card"><i class="${f.icon}" style="font-size:2.8rem; color:#d4af37; display: block; margin: 0 auto 1rem auto;"></i><h3>${f.name}</h3></div>`).join('');
+  
+  // Hostel data
+  const hostels = [
+    { name: "Heritage Tower (Girls)", price: "$2,800/sem", amenities: ["AC Deluxe Rooms", "Study Lounge", "Private Gym", "High-Speed WiFi", "Movie Theater", "24/7 Security"], premium: "Premium", img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=600&h=400&fit=crop", capacity: "200 seats" },
+    { name: "Innovation Hall (Boys)", price: "$3,200/sem", amenities: ["Smart Rooms", "Gaming Zone", "Rooftop Cafe", "Laundry Service", "Mini Cinema", "Swimming Pool"], premium: "Ultra", img: "https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=600&h=400&fit=crop", capacity: "250 seats" },
+    { name: "International Hostel", price: "$4,500/sem", amenities: ["Studio Rooms", "Global Cuisine", "Study Pods", "Fiber Optic", "Yoga Deck", "Private Balcony"], premium: "Elite", img: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600&h=400&fit=crop", capacity: "120 seats" }
+  ];
+  document.getElementById('hostelGrid').innerHTML = hostels.map(h => `
+    <div class="hostel-card" style="text-align: center;">
+      <div class="hostel-img" style="height:220px; background-size:cover; background-image:url('${h.img}'); border-radius:28px; background-position: center;"></div>
+      <div class="hostel-premium-tag" style="margin-top: 1rem;"><i class="fas fa-crown"></i> ${h.premium} Living</div>
+      <h3 style="margin: 0.8rem 0;">${h.name}</h3>
+      <div class="hostel-price">${h.price} <span style="font-size: 0.9rem;">/ semester</span></div>
+      <p><i class="fas fa-users"></i> Capacity: ${h.capacity}</p>
+      <div class="hostel-feature-list">${h.amenities.map(a => `<span class="amenity-badge"><i class="fas fa-check-circle" style="font-size:0.7rem;"></i> ${a}</span>`).join('')}</div>
+      <button class="btn btn-outline hostel-apply-btn" style="margin-top: 1rem; width: 80%;"><i class="fas fa-key"></i> Reserve Room</button>
+    </div>
+  `).join('');
+  document.querySelectorAll('.hostel-apply-btn').forEach(btn => btn.addEventListener('click', () => { document.getElementById('modalTitle').innerText = '🏠 Premium Hostel Booking'; document.getElementById('applyModal').style.display = 'flex'; }));
+  document.getElementById('hostelApplyBtn').onclick = () => { document.getElementById('modalTitle').innerText = '🏠 Premium Hostel Booking'; document.getElementById('applyModal').style.display = 'flex'; };
+  
+  // Courses data
+  const coursesData = [
+    { title: "Computer Science Engineering", category: "engineering", duration: "4 Years", desc: "AI, Quantum Computing", img: "https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=400&h=190&fit=crop" },
+    { title: "AI & Data Science", category: "engineering", duration: "4 Years", desc: "Machine Learning, Big Data", img: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=190&fit=crop" },
+    { title: "Robotics Engineering", category: "engineering", duration: "4 Years", desc: "Automation, IoT, Drone Tech", img: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=190&fit=crop" },
+    { title: "English Literature", category: "arts", duration: "3 Years", desc: "World Literature", img: "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=400&h=190&fit=crop" },
+    { title: "Psychology", category: "arts", duration: "3 Years", desc: "Clinical Psychology", img: "https://images.unsplash.com/photo-1573497491208-6b1acb260507?w=400&h=190&fit=crop" },
+    { title: "B.Com (Honours)", category: "commerce", duration: "3 Years", desc: "Finance & Tax", img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=400&h=190&fit=crop" },
+    { title: "BBA", category: "commerce", duration: "3 Years", desc: "Business Analytics", img: "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=400&h=190&fit=crop" },
+    { title: "Digital Marketing", category: "emerging", duration: "2 Years", desc: "SEO, Social Media, Analytics", img: "https://images.unsplash.com/photo-1557838923-2985c318be48?w=400&h=190&fit=crop" }
+  ];
+  function renderCourses(filter = "all") { 
+    const grid = document.getElementById('coursesGrid'); 
+    grid.innerHTML = coursesData.filter(c => filter === 'all' || c.category === filter).map(c => `<div class="course-card"><div class="course-img" style="height:170px; background-size:cover; background-image:url('${c.img}'); border-radius:24px;"></div><div class="course-info" style="padding:1.2rem;"><h3>${c.title}</h3><p>📅 ${c.duration}</p><p>${c.desc}</p></div></div>`).join(''); 
+  }
+  renderCourses(); 
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  filterBtns.forEach(btn => btn.addEventListener('click', () => { 
+    filterBtns.forEach(b => { b.style.background = "var(--card-bg)"; b.style.border = "1px solid var(--border-color)"; b.style.color = "var(--text-primary)"; });
+    if(btn.dataset.filter === 'all') btn.style.background = "linear-gradient(135deg, #d4af37, #ffea9e)";
+    else btn.style.background = "linear-gradient(135deg, var(--gradient-start), var(--gradient-end))";
+    btn.style.color = "#fff";
+    if(btn.dataset.filter === 'all') btn.style.color = "#1a2c3e";
+    renderCourses(btn.dataset.filter); 
+  }));
+  
+  let feeData = [{ course: "CSE", duration: "4 Years", fee: "$12,500", seats: "120" }, { course: "AI & DS", duration: "4 Years", fee: "$14,000", seats: "80" }, { course: "Robotics", duration: "4 Years", fee: "$13,500", seats: "60" }, { course: "Digital Marketing", duration: "2 Years", fee: "$9,500", seats: "100" }, { course: "English Lit", duration: "3 Years", fee: "$7,200", seats: "90" }, { course: "Psychology", duration: "3 Years", fee: "$7,500", seats: "75" }, { course: "B.Com", duration: "3 Years", fee: "$8,000", seats: "110" }, { course: "BBA", duration: "3 Years", fee: "$9,250", seats: "95" }];
+  function renderTable(data) { const tbody = document.getElementById('tableBody'); tbody.innerHTML = data.map(row => `<tr><td>${row.course}</td><td>${row.duration}</td><td>${row.fee}</td><td>${row.seats}</td><td><button class="btn-primary applyBtn" style="padding:6px 20px; border-radius:40px;">Apply</button></td></tr>`).join(''); document.querySelectorAll('.applyBtn').forEach(btn => btn.onclick = () => { document.getElementById('modalTitle').innerText = '🎓 Course Application'; document.getElementById('applyModal').style.display = 'flex'; }); }
+  renderTable(feeData); document.getElementById('tableSearch').addEventListener('input', e => renderTable(feeData.filter(d => d.course.toLowerCase().includes(e.target.value.toLowerCase()))));
+  
+  const marqueeImages = ["https://images.unsplash.com/photo-1562774053-701939374585?w=300&h=200&fit=crop", "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=300&h=200&fit=crop", "https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?w=300&h=200&fit=crop", "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=300&h=200&fit=crop", "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=300&h=200&fit=crop", "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=300&h=200&fit=crop"];
+  const marqueeContainer = document.getElementById('marqueeContent'); const cloneContainer = document.getElementById('marqueeContentClone');
+  marqueeImages.forEach(src => { const img = document.createElement('img'); img.src = src; img.style.width = "200px"; img.style.height = "130px"; img.style.objectFit = "cover"; img.style.borderRadius = "20px"; img.style.margin = "0 10px"; img.style.cursor = "pointer"; img.addEventListener('click', () => { const lb = document.createElement('div'); lb.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:flex; align-items:center; justify-content:center; z-index:3000;"; lb.innerHTML = `<img src="${src}" style="max-width:90%; max-height:80%; border-radius:24px;"><span style="position:absolute; top:20px; right:30px; color:white; font-size:40px; cursor:pointer;">&times;</span>`; document.body.appendChild(lb); lb.addEventListener('click', (e) => { if(e.target === lb || e.target.tagName === 'SPAN') lb.remove(); }); }); marqueeContainer.appendChild(img); cloneContainer.appendChild(img.cloneNode(true)); });
+  
+  document.querySelectorAll('.gallery-feature').forEach(feature => { feature.addEventListener('click', () => { const imgSrc = feature.querySelector('img').src; const lb = document.createElement('div'); lb.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:flex; align-items:center; justify-content:center; z-index:3000;"; lb.innerHTML = `<img src="${imgSrc}" style="max-width:90%; max-height:80%; border-radius:24px;"><span style="position:absolute; top:20px; right:30px; color:white; font-size:40px; cursor:pointer;">&times;</span>`; document.body.appendChild(lb); lb.addEventListener('click', (e) => { if(e.target === lb || e.target.tagName === 'SPAN') lb.remove(); }); }); });
+  
+  // Enhanced Contact Form with character counter
+  const msgTextarea = document.getElementById('contactMsg');
+  const charSpan = document.getElementById('charCount');
+  if(msgTextarea && charSpan) {
+    msgTextarea.addEventListener('input', () => { charSpan.innerText = msgTextarea.value.length; if(msgTextarea.value.length > 500) msgTextarea.value = msgTextarea.value.slice(0,500); });
+  }
+  document.getElementById('contactForm').addEventListener('submit', (e) => { e.preventDefault(); if (!document.getElementById('contactName').value || !document.getElementById('contactEmail').value.includes('@') || !document.getElementById('contactMsg').value) document.getElementById('formError').innerText = '⚠️ Please fill all required fields correctly.'; else { alert('✅ Message sent! We will contact you soon.'); e.target.reset(); if(charSpan) charSpan.innerText = '0'; } });
+  document.getElementById('closeModal')?.addEventListener('click', () => document.getElementById('applyModal').style.display = 'none'); window.onclick = (e) => { if (e.target === document.getElementById('applyModal')) document.getElementById('applyModal').style.display = 'none'; };
+  document.getElementById('modalForm')?.addEventListener('submit', (e) => { e.preventDefault(); document.getElementById('modalMsg').innerHTML = '<span style="color:green;">✅ Application submitted!</span>'; setTimeout(() => { document.getElementById('applyModal').style.display = 'none'; document.getElementById('modalMsg').innerHTML = ''; }, 1500); });
+  document.getElementById('newsBtnFooter')?.addEventListener('click', () => { const email = document.getElementById('newsEmailFooter').value; if (email.includes('@')) alert('✅ Subscribed successfully!'); else alert('❌ Enter valid email'); });
+</script>
+</body>
+</html>
